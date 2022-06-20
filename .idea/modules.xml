@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/microsservico-autenticacao-jwt.iml" filepath="$PROJECT_DIR$/.idea/microsservico-autenticacao-jwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.iml" filepath="$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.main.iml" filepath="$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.test.iml" filepath="$PROJECT_DIR$/.idea/modules/microsservico-autenticacao-jwt.microsservico-autenticacao-jwt.test.iml" />
     </modules>
   </component>
 </project>
