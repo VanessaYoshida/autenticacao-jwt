@@ -26,7 +26,6 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
         if (usuario.isEmpty()){
             throw new UsernameNotFoundException("Usuário [" + username + "] não encontrado");
         }
-        return new DetalheUsuarioData(usuario
-        );
+        return new DetalheUsuarioData(usuario);
     }
 }
