@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -13,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.springframework.security.config.Elements.JWT;
-
 public class JWTValidarFilter extends BasicAuthenticationFilter {
 
     public static final String HEADER_ATRIBUTO = "Authorization";
-    public static final String ATRIBUTO_PREFIXO = "Bearer";
+    public static final String ATRIBUTO_PREFIXO = "Bearer ";
 
     public JWTValidarFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
@@ -28,8 +27,6 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        super.doFilterInternal(request, response, chain);
-
 
         String atributo = request.getHeader(HEADER_ATRIBUTO);
 
@@ -42,11 +39,16 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-//            UsernamePasswordAuthenticationToken =
+
+        String token = atributo.replace(ATRIBUTO_PREFIXO, "");
+        UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
-        String usuario = com.auth0.jwt.JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA))
+        String usuario = JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA))
                 .build()
                 .verify(token)
                 .getSubject();
