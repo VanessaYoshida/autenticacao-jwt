@@ -15,10 +15,12 @@ public class DetalheUsuarioServiceImpl implements UserDetailsService {
 
     private final UsuarioRepository repository;
 
+    //Injetar o repositório para fazer a consulta do usuario
     public DetalheUsuarioServiceImpl(UsuarioRepository repository) {
         this.repository = repository;
     }
 
+    //Consulta do usuario
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

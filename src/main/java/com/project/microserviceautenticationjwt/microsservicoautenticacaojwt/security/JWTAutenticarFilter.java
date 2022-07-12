@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Autenticar usuario e fazer a geração do Token JWT
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
+    //10 minutos
     public static final int TOKEN_EXPIRACAO = 600_000;
     public static final String TOKEN_SENHA = "463408a1-54c9-4307-bb1c-6cced559f5a7";
     private final AuthenticationManager authenticationManager;
@@ -29,6 +31,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
         this.authenticationManager = authenticationManager;
     }
 
+    //Método que efetivamente vai executar a nossa autenticação
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
@@ -45,6 +48,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
+    //Caso a autenticação for Sucesso, vamos gerar um token JWT
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

@@ -24,22 +24,26 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //Indicando para o Spring Security usar as minhas classes como classe base de implementação
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder);
     }
 
+    //desabilitei o csrf para desenvolvimento apenas,
+    // mas ele resolve ataques na aplicação então é importante utilizar no projeto real
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST, "/login").permitAll() //login permite tudo
+                .anyRequest().authenticated() //qualquer outra chamada precisa de autenticação
                 .and()
                 .addFilter(new JWTAutenticarFilter(authenticationManager()))
                 .addFilter(new JWTValidarFilter(authenticationManager()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
+    //Cors permite que a aplicação possa receber requisição de outros domínios
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

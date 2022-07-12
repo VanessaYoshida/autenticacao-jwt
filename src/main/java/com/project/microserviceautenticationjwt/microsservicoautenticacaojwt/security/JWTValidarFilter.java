@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//Validar o Token JWT
 public class JWTValidarFilter extends BasicAuthenticationFilter {
 
     public static final String HEADER_ATRIBUTO = "Authorization";
+
+    //Tipo do Atributo = Bearer
     public static final String ATRIBUTO_PREFIXO = "Bearer ";
 
     public JWTValidarFilter(AuthenticationManager authenticationManager) {
@@ -47,6 +50,7 @@ public class JWTValidarFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
+    //Leitura do token e vai retornar os dados do usuario para garantir que é um usuario válido
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
         String usuario = JWT.require(Algorithm.HMAC512(JWTAutenticarFilter.TOKEN_SENHA))
                 .build()
